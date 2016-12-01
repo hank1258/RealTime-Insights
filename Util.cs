@@ -48,7 +48,18 @@ using Windows.Storage.Streams;
 using Windows.UI.Popups;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
+using Microsoft.WindowsAzure; // Namespace for CloudConfigurationManager 
+using Microsoft.WindowsAzure.Storage; // Namespace for CloudStorageAccount 
+using Microsoft.WindowsAzure.Storage.Blob; // Namespace for Blob storage types 
+using Microsoft.Azure.Devices;
 
+//using Microsoft.ServiceBus.Messaging;
+
+using System.IO;
+using Newtonsoft.Json;
+//using Microsoft.Azure; // Namespace for CloudConfigurationManager
+//using Microsoft.WindowsAzure.Storage; // Namespace for CloudStorageAccount
+//using Microsoft.WindowsAzure.Storage.Blob; // Namespace for Blob storage types
 namespace IntelligentKioskSample
 {
     internal static class Util
@@ -174,5 +185,51 @@ namespace IntelligentKioskSample
                 list.Add(item);
             }
         }
+        /*
+        private static string EVENT_HUB = "opendemoeh";
+        private static string CONNECTION_STRING = "Endpoint=sb://opendemoeh.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=6VujxD91yRAdF0Y3Hyq4UHIlnIetUm2ZcfJJ7QcfF6g=";
+        private static string BLOB_CONNECTION_STRING = "DefaultEndpointsProtocol=https;AccountName=opendemost;AccountKey=t6wYwnwoG1E6iuxSubks7OKlsJCRsELGyFRz7P65hPalOSJgO/BcrWuK2Q+vb9+5ZrPQAa5+STszN5aZYofgsA==";
+        private static string FILE_URL = "https://opendemost.blob.core.windows.net/photo/";
+
+        public static void sendFaceDetectedEvent(Face face, string path)
+        {
+            string fileName;
+            if (Path.GetPathRoot(path) != null && Path.GetPathRoot(path) != "")
+                fileName = path.Replace(Path.GetPathRoot(path), "").Replace("\\", "/");
+            else
+                fileName = path.Replace("\\", "/");
+
+          //  System.Console.WriteLine("fileName:" + fileName);
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(BLOB_CONNECTION_STRING);
+            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+            CloudBlobContainer container = blobClient.GetContainerReference("photo");
+            CloudBlockBlob blockBlob = container.GetBlockBlobReference(fileName);
+            using (var fileStream = System.IO.File.OpenRead(path))
+            {
+                blockBlob.UploadFromStreamAsync(fileStream);
+                
+            }
+
+            Random rand = new Random();
+            var eventHubClient = EventHubClient.CreateFromConnectionString(CONNECTION_STRING, EVENT_HUB);
+
+            var dict = new Dictionary<string, string>();
+            dict.Add("id", face.FaceId.ToString());
+            dict.Add("gender", face.FaceAttributes.Gender);
+            dict.Add("age", face.FaceAttributes.Age.ToString());
+            dict.Add("date", DateTime.Now.ToString("yyyy-MM-dd HH:mm"));
+            dict.Add("smile", face.FaceAttributes.Smile.ToString());
+            dict.Add("glasses", face.FaceAttributes.Glasses.ToString());
+            dict.Add("avgs", rand.Next(5, 8).ToString());
+            dict.Add("avgrank", (3 + rand.NextDouble() * 1.5).ToString());
+            dict.Add("path", FILE_URL + fileName);
+
+            string json = JsonConvert.SerializeObject(dict, Formatting.Indented);
+            eventHubClient.Send(new EventData(Encoding.UTF8.GetBytes(json)));
+
+
+
+        }*/
+
     }
 }

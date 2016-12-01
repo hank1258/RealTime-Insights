@@ -55,11 +55,13 @@ using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using IntelligentKioskSample;
+using Microsoft.Azure.Devices;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
 namespace App2.Controls
 {
+
     public enum AutoCaptureState
     {
         WaitingForFaces,
@@ -134,7 +136,7 @@ namespace App2.Controls
         private IEnumerable<DetectedFace> detectedFacesFromPreviousFrame;
         private DateTime timeSinceWaitingForStill;
         private DateTime lastTimeWhenAFaceWasDetected;
-
+        const string connectionString = "HostName=kioskreal.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=Hl+cyyiDUY66FCZ5TXL7fdfFtSgQP6YuOtdg0P5s89A=";
         private IRealTimeDataProvider realTimeDataProvider;
 
         public CameraControl()
@@ -158,26 +160,32 @@ namespace App2.Controls
                 MediaCaptureInitializationSettings settings = new MediaCaptureInitializationSettings();
 
                 var allCameras = await DeviceInformation.FindAllAsync(DeviceClass.VideoCapture);
-                var selectedCamera = allCameras.FirstOrDefault(c => c.Name == "Integrated Camera");
+                var selectedCamera = allCameras.FirstOrDefault(c => c.Name == "WebCam");
 
                 if (selectedCamera != null)
                 {
+                   // System.Diagnostics.Debug.WriteLine("meowmeow");
                     settings.VideoDeviceId = selectedCamera.Id;
+                    System.Diagnostics.Debug.WriteLine("lplolaaaaaaaalollol");
                 }
-                // settings.StreamingCaptureMode = StreamingCaptureMode.Video;
+              
+                //settings.StreamingCaptureMode = StreamingCaptureMode.Video;
+                System.Diagnostics.Debug.WriteLine("zzzzzzzzlollol");
                 await captureManager.InitializeAsync(settings);
+               // await captureManager.InitializeAsync();
+                System.Diagnostics.Debug.WriteLine("lplolpppppppppppplollol");
                 await SetVideoEncodingToHighestResolution(isForRealTimeProcessing);
-
+                System.Diagnostics.Debug.WriteLine("lplololollol");
                 // Cache the media properties as we'll need them later.
-                // var deviceController = this.captureManager.VideoDeviceController;
-                //  this.videoProperties = deviceController.GetMediaStreamProperties(MediaStreamType.VideoPreview) as VideoEncodingProperties;
+                    var deviceController = this.captureManager.VideoDeviceController;
+                    this.videoProperties = deviceController.GetMediaStreamProperties(MediaStreamType.VideoPreview) as VideoEncodingProperties;
 
 
                 // Immediately start streaming to our CaptureElement UI.
                 // NOTE: CaptureElement's Source must be set before streaming is started.
                 this.webCamCaptureElement.Source = captureManager;
 
-
+                System.Diagnostics.Debug.WriteLine("kiosk");
                 if (this.faceTracker == null)
                 {
                     this.faceTracker = await FaceTracker.CreateAsync();
@@ -198,7 +206,7 @@ namespace App2.Controls
 
                 this.cameraControlSymbol.Symbol = Symbol.Camera;
                 this.webCamCaptureElement.Visibility = Visibility.Visible;
-
+                
 
             }
             catch (Exception ex)
@@ -308,7 +316,7 @@ namespace App2.Controls
                     RealTimeFaceIdentificationBorder faceBorder = new RealTimeFaceIdentificationBorder();
                     this.FaceTrackingVisualizationCanvas.Children.Add(faceBorder);
 
-                    // faceBorder.ShowFaceRectangle((uint)(face.FaceBox.X / widthScale), (uint)(face.FaceBox.Y / heightScale), (uint)(face.FaceBox.Width / widthScale), (uint)(face.FaceBox.Height / heightScale));
+                     faceBorder.ShowFaceRectangle((uint)(face.FaceBox.X / widthScale), (uint)(face.FaceBox.Y / heightScale), (uint)(face.FaceBox.Width / widthScale), (uint)(face.FaceBox.Height / heightScale));
 
                     if (this.realTimeDataProvider != null)
                     {

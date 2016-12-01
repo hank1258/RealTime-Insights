@@ -104,6 +104,7 @@
     <Compile Include="Controls\CameraControl.xaml.cs">
       <DependentUpon>CameraControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\IoTClient.cs" />
     <Compile Include="Controls\EmotionEmojiControl.xaml.cs" />
     <Compile Include="Controls\EmotionMeterControl.xaml.cs" />
     <Compile Include="Controls\EmotionResponseStackBarControl.xaml.cs" />
@@ -215,6 +216,9 @@
     <Reference Include="ServiceHelpers">
       <HintPath>..\..\..\..\..\..\..\Cognitive-Samples-IntelligentKiosk-master\Cognitive-Samples-IntelligentKiosk-master\Kiosk\ServiceHelpers\bin\Debug\ServiceHelpers.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

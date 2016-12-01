@@ -18,6 +18,10 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using App2;
 using IntelligentKioskSample;
+using Microsoft.Azure.Devices;
+using Newtonsoft.Json;
+using System.Text;
+using Microsoft.Azure.Devices.Client;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -39,10 +43,12 @@ namespace App2
 
         private DemographicsData demographics;
         private Dictionary<Guid, Visitor> visitors = new Dictionary<Guid, Visitor>();
+     
+        
         public MainPage()
         {
             this.InitializeComponent();
-            System.Diagnostics.Debug.WriteLine("asdasdasdasdasdas");
+         
             this.DataContext = this;
 
             Window.Current.Activated += CurrentWindowActivationStateChanged;
@@ -105,7 +111,7 @@ namespace App2
                 e.WindowActivationState == Windows.UI.Core.CoreWindowActivationState.PointerActivated) &&
                 this.cameraControl.CameraStreamState == Windows.Media.Devices.CameraStreamState.Shutdown)
             {
-                System.Diagnostics.Debug.WriteLine("dddddddd");
+               
                 // When our Window loses focus due to user interaction Windows shuts it down, so we 
                 // detect here when the window regains focus and trigger a restart of the camera.
                 await this.cameraControl.StartStreamAsync(isForRealTimeProcessing: true);
@@ -205,14 +211,13 @@ namespace App2
 
                 await ResetDemographicsData();
                 this.UpdateDemographicsUI();
-                System.Diagnostics.Debug.WriteLine("dsssssdd");
                 await this.cameraControl.StartStreamAsync(isForRealTimeProcessing: true);
                 this.StartProcessingLoop();
          
 
             base.OnNavigatedTo(e);
         }
-
+       
         private void UpdateDemographics(ImageAnalyzer img)
         {
             if (this.lastSimilarPersistedFaceSample != null)
@@ -224,7 +229,11 @@ namespace App2
                     Visitor visitor;
                     if (this.visitors.TryGetValue(item.SimilarPersistedFace.PersistedFaceId, out visitor))
                     {
-                        visitor.Count++;
+                        visitor.Count = visitor.Count++ ;
+                      
+#pragma warning disable 4014
+                        IoTClient.Start(item);
+#pragma warning restore 4014
                     }
                     else
                     {
