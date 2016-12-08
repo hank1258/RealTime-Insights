@@ -213,12 +213,13 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="ServiceHelpers">
-      <HintPath>..\..\..\..\..\..\..\Cognitive-Samples-IntelligentKiosk-master\Cognitive-Samples-IntelligentKiosk-master\Kiosk\ServiceHelpers\bin\Debug\ServiceHelpers.dll</HintPath>
-    </Reference>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Service References\" />
+    <ProjectReference Include="..\..\..\..\..\..\..\Cognitive-Samples-IntelligentKiosk-master\Cognitive-Samples-IntelligentKiosk-master\Kiosk\ServiceHelpers\ServiceHelpers.csproj">
+      <Project>{5d9320af-a9e4-48e3-89bc-9f7f0954b298}</Project>
+      <Name>ServiceHelpers</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

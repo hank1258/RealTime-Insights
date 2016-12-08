@@ -160,7 +160,7 @@ namespace App2.Controls
                 MediaCaptureInitializationSettings settings = new MediaCaptureInitializationSettings();
 
                 var allCameras = await DeviceInformation.FindAllAsync(DeviceClass.VideoCapture);
-                var selectedCamera = allCameras.FirstOrDefault(c => c.Name == "WebCam");
+                var selectedCamera = allCameras.FirstOrDefault(c => c.Name == "WebCam" || c.Name =="IntegratedCamera");
 
                 if (selectedCamera != null)
                 {

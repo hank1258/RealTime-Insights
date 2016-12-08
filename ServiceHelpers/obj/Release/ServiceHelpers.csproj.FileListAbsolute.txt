@@ -1,0 +1,16 @@
+C:\Cognitive-Samples-IntelligentKiosk-master\Cognitive-Samples-IntelligentKiosk-master\Kiosk\ServiceHelpers\bin\Release\ServiceHelpers.dll.config
+C:\Cognitive-Samples-IntelligentKiosk-master\Cognitive-Samples-IntelligentKiosk-master\Kiosk\ServiceHelpers\bin\Release\ServiceHelpers.dll
+C:\Cognitive-Samples-IntelligentKiosk-master\Cognitive-Samples-IntelligentKiosk-master\Kiosk\ServiceHelpers\bin\Release\ServiceHelpers.pdb
+C:\Cognitive-Samples-IntelligentKiosk-master\Cognitive-Samples-IntelligentKiosk-master\Kiosk\ServiceHelpers\bin\Release\Microsoft.ProjectOxford.Common.dll
+C:\Cognitive-Samples-IntelligentKiosk-master\Cognitive-Samples-IntelligentKiosk-master\Kiosk\ServiceHelpers\bin\Release\Microsoft.ProjectOxford.Emotion.dll
+C:\Cognitive-Samples-IntelligentKiosk-master\Cognitive-Samples-IntelligentKiosk-master\Kiosk\ServiceHelpers\bin\Release\Microsoft.ProjectOxford.Face.dll
+C:\Cognitive-Samples-IntelligentKiosk-master\Cognitive-Samples-IntelligentKiosk-master\Kiosk\ServiceHelpers\bin\Release\Newtonsoft.Json.dll
+C:\Cognitive-Samples-IntelligentKiosk-master\Cognitive-Samples-IntelligentKiosk-master\Kiosk\ServiceHelpers\bin\Release\System.Net.Http.Extensions.dll
+C:\Cognitive-Samples-IntelligentKiosk-master\Cognitive-Samples-IntelligentKiosk-master\Kiosk\ServiceHelpers\bin\Release\System.Net.Http.Primitives.dll
+C:\Cognitive-Samples-IntelligentKiosk-master\Cognitive-Samples-IntelligentKiosk-master\Kiosk\ServiceHelpers\bin\Release\Newtonsoft.Json.xml
+C:\Cognitive-Samples-IntelligentKiosk-master\Cognitive-Samples-IntelligentKiosk-master\Kiosk\ServiceHelpers\bin\Release\System.Net.Http.Extensions.xml
+C:\Cognitive-Samples-IntelligentKiosk-master\Cognitive-Samples-IntelligentKiosk-master\Kiosk\ServiceHelpers\bin\Release\System.Net.Http.Primitives.xml
+C:\Cognitive-Samples-IntelligentKiosk-master\Cognitive-Samples-IntelligentKiosk-master\Kiosk\ServiceHelpers\obj\Release\ServiceHelpers.csproj.App.config
+C:\Cognitive-Samples-IntelligentKiosk-master\Cognitive-Samples-IntelligentKiosk-master\Kiosk\ServiceHelpers\obj\Release\ServiceHelpers.csprojResolveAssemblyReference.cache
+C:\Cognitive-Samples-IntelligentKiosk-master\Cognitive-Samples-IntelligentKiosk-master\Kiosk\ServiceHelpers\obj\Release\ServiceHelpers.dll
+C:\Cognitive-Samples-IntelligentKiosk-master\Cognitive-Samples-IntelligentKiosk-master\Kiosk\ServiceHelpers\obj\Release\ServiceHelpers.pdb

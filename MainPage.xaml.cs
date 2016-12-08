@@ -82,7 +82,7 @@ namespace App2
                 {
                     if (!this.isProcessingPhoto)
                     {
-                        if (DateTime.Now.Hour != this.demographics.StartTime.Hour)
+                        if (DateTime.Now.Day != this.demographics.StartTime.Day)
                         {
                             // We have been running through the hour. Reset the data...
                             await this.ResetDemographicsData();

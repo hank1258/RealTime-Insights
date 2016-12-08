@@ -1,1 +1,2 @@
+C:\Cognitive-Samples-IntelligentKiosk-master\Cognitive-Samples-IntelligentKiosk-master\Kiosk\ServiceHelpers\ServiceHelpers.csproj;neutral
 C:\Users\v-huhaor\Documents\Visual Studio 2015\Projects\App2\App2\App2.csproj;x86
