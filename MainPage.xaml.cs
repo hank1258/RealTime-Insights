@@ -230,10 +230,8 @@ namespace App2
                     if (this.visitors.TryGetValue(item.SimilarPersistedFace.PersistedFaceId, out visitor))
                     {
                         visitor.Count = visitor.Count++ ;
-                      
-#pragma warning disable 4014
-                        IoTClient.Start(item);
-#pragma warning restore 4014
+                        item.Unique = "";
+
                     }
                     else
                     {
@@ -242,6 +240,9 @@ namespace App2
                         visitor = new Visitor { UniqueId = item.SimilarPersistedFace.PersistedFaceId, Count = 1 };
                         this.visitors.Add(visitor.UniqueId, visitor);
                         this.demographics.Visitors.Add(visitor);
+
+                        item.Unique = "unique";
+
 
                         // Update the demographics stats. We only do it for new visitors to avoid double counting. 
                         AgeDistribution genderBasedAgeDistribution = null;
@@ -281,6 +282,9 @@ namespace App2
                             genderBasedAgeDistribution.Age50sAndOlder++;
                         }
                     }
+#pragma warning disable 4014
+                    IoTClient.Start(item);
+#pragma warning restore 4014
                 }
 
                 if (demographicsChanged)

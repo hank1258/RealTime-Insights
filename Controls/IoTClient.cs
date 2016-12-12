@@ -39,6 +39,7 @@ namespace App2.Controls
                 dict.Add("glasses", item.Face.FaceAttributes.Glasses.ToString());
                 dict.Add("avgs", rand.Next(5, 8).ToString());
                 dict.Add("avgrank", (3 + rand.NextDouble() * 1.5).ToString());
+                dict.Add("unique", item.Unique);
                 var message = new Microsoft.Azure.Devices.Message(System.Text.Encoding.ASCII.GetBytes(str));
                 string json = JsonConvert.SerializeObject(dict, Formatting.Indented);
                 await serviceClient.SendEventAsync(new Microsoft.Azure.Devices.Client.Message(Encoding.UTF8.GetBytes(json)));
