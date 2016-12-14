@@ -145,7 +145,7 @@ namespace App2
             else
             {
                 this.lastEmotionSample = e.DetectedEmotion;
-
+              
                 Scores averageScores = new Scores
                 {
                     Happiness = e.DetectedEmotion.Average(em => em.Scores.Happiness),
@@ -157,6 +157,7 @@ namespace App2
                     Fear = e.DetectedEmotion.Average(em => em.Scores.Fear),
                     Surprise = e.DetectedEmotion.Average(em => em.Scores.Surprise)
                 };
+               
 
                 this.emotionDataTimelineControl.DrawEmotionData(averageScores);
             }
@@ -230,8 +231,8 @@ namespace App2
                     if (this.visitors.TryGetValue(item.SimilarPersistedFace.PersistedFaceId, out visitor))
                     {
                         visitor.Count = visitor.Count++ ;
-                        item.Unique = "";
-
+                        item.Unique = "0";
+                        
                     }
                     else
                     {
@@ -241,7 +242,7 @@ namespace App2
                         this.visitors.Add(visitor.UniqueId, visitor);
                         this.demographics.Visitors.Add(visitor);
 
-                        item.Unique = "unique";
+                        item.Unique = "1";
 
 
                         // Update the demographics stats. We only do it for new visitors to avoid double counting. 
@@ -282,6 +283,14 @@ namespace App2
                             genderBasedAgeDistribution.Age50sAndOlder++;
                         }
                     }
+                    item.Anger = lastEmotionSample.First().Scores.Anger.ToString();
+                    item.Contempt = lastEmotionSample.First().Scores.Contempt.ToString();
+                    item.Disgust = lastEmotionSample.First().Scores.Disgust.ToString();
+                    item.Fear = lastEmotionSample.First().Scores.Fear.ToString();
+                    item.Happiness = lastEmotionSample.First().Scores.Happiness.ToString();
+                    item.Neutral = lastEmotionSample.First().Scores.Neutral.ToString();
+                    item.Sadness = lastEmotionSample.First().Scores.Sadness.ToString();
+                    item.Surprise = lastEmotionSample.First().Scores.Surprise.ToString();
 #pragma warning disable 4014
                     IoTClient.Start(item);
 #pragma warning restore 4014
@@ -362,7 +371,7 @@ namespace App2
             {
                 return null;
             }
-
+            
             return this.lastEmotionSample.OrderBy(f => Math.Abs(faceBox.X - f.FaceRectangle.Left) + Math.Abs(faceBox.Y - f.FaceRectangle.Top)).First().Scores;
         }
 

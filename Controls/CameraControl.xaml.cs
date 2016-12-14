@@ -324,6 +324,7 @@ namespace App2.Controls
                         if (lastEmotion != null)
                         {
                             faceBorder.ShowRealTimeEmotionData(lastEmotion);
+                            
                         }
 
                         Face detectedFace = this.realTimeDataProvider.GetLastFaceAttributesForFace(face.FaceBox);
