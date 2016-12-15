@@ -52,7 +52,7 @@ namespace App2.Controls
                 string json = JsonConvert.SerializeObject(dict, Formatting.Indented);
                 await serviceClient.SendEventAsync(new Microsoft.Azure.Devices.Client.Message(Encoding.UTF8.GetBytes(json)));
                // await SendEvent(deviceClient);
-              //  await ReceiveCommands(deviceClient);
+              //  await ReceiveCommands(serviceClient);
 
                 Debug.WriteLine("Exited!\n");
             }
