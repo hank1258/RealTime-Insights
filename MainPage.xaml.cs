@@ -192,8 +192,9 @@ namespace App2
                 this.lastSimilarPersistedFaceSample = e.SimilarFaceMatches;
             }
 
+            
             this.UpdateDemographics(e);
-
+          
             this.debugText.Text = string.Format("Latency: {0}ms", (int)(DateTime.Now - start).TotalMilliseconds);
 
             this.isProcessingPhoto = false;
@@ -218,9 +219,16 @@ namespace App2
 
             base.OnNavigatedTo(e);
         }
-       
-        private void UpdateDemographics(ImageAnalyzer img)
+
+        private async Task UpdateDemographicsAsync(ImageAnalyzer im)
         {
+            //return new Task<UpdateDemographics>;
+        }
+
+        private async void UpdateDemographics(ImageAnalyzer img)
+        {
+            System.Diagnostics.Debug.WriteLine("enter update");
+
             if (this.lastSimilarPersistedFaceSample != null)
             {
                 bool demographicsChanged = false;
@@ -230,9 +238,9 @@ namespace App2
                     Visitor visitor;
                     if (this.visitors.TryGetValue(item.SimilarPersistedFace.PersistedFaceId, out visitor))
                     {
-                        visitor.Count = visitor.Count++ ;
+                        visitor.Count++ ;
                         item.Unique = "0";
-                        
+                     
                     }
                     else
                     {
@@ -292,7 +300,7 @@ namespace App2
                     item.Sadness = lastEmotionSample.First().Scores.Sadness.ToString();
                     item.Surprise = lastEmotionSample.First().Scores.Surprise.ToString();
 #pragma warning disable 4014
-                    IoTClient.Start(item);
+                    await Task.WhenAll(IoTClient.Start(item));
 #pragma warning restore 4014
                 }
 
@@ -301,7 +309,7 @@ namespace App2
                     this.ageGenderDistributionControl.UpdateData(this.demographics);
                 }
 
-                this.overallStatsControl.UpdateData(this.demographics);
+               this.overallStatsControl.UpdateData(this.demographics);
             }
         }
 
