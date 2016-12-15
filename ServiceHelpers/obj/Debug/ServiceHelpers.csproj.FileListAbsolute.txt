@@ -14,3 +14,5 @@ C:\Cognitive-Samples-IntelligentKiosk-master\Cognitive-Samples-IntelligentKiosk-
 C:\Cognitive-Samples-IntelligentKiosk-master\Cognitive-Samples-IntelligentKiosk-master\Kiosk\ServiceHelpers\obj\Debug\ServiceHelpers.csprojResolveAssemblyReference.cache
 C:\Cognitive-Samples-IntelligentKiosk-master\Cognitive-Samples-IntelligentKiosk-master\Kiosk\ServiceHelpers\obj\Debug\ServiceHelpers.dll
 C:\Cognitive-Samples-IntelligentKiosk-master\Cognitive-Samples-IntelligentKiosk-master\Kiosk\ServiceHelpers\obj\Debug\ServiceHelpers.pdb
+C:\Users\chuhuan\Project\microsoft\RealTime-Insights\ServiceHelpers\obj\Debug\ServiceHelpers.dll
+C:\Users\chuhuan\Project\microsoft\RealTime-Insights\ServiceHelpers\obj\Debug\ServiceHelpers.pdb
