@@ -339,5 +339,43 @@ namespace ServiceHelpers
         {
             get; set;
         }
+
+        public string Unique
+        {
+            get; set;
+        }
+        public string Happiness
+        {
+            get; set;
+        }
+        public string Anger
+        {
+            get; set;
+        }
+        public string Contempt
+        {
+            get; set;
+        }
+        public string Disgust
+        {
+            get; set;
+        }
+        public string Fear
+        {
+            get; set;
+        }
+        public string Neutral
+        {
+            get; set;
+        }
+        public string Sadness
+        {
+            get; set;
+        }
+        public string Surprise
+        {
+            get; set;
+        }
+
     }
 }

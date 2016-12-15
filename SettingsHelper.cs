@@ -209,8 +209,8 @@ namespace App2
             get { return this.faceApiKey; }
             set
             {
-                this.faceApiKey = "8f7a031e5133417aa8b1f1ab525efec1";
-                this.OnSettingChanged("FaceApiKey", "8f7a031e5133417aa8b1f1ab525efec1");
+                this.faceApiKey = "67ef38854e704a16a28935fa9616c3ca";
+                this.OnSettingChanged("FaceApiKey", "67ef38854e704a16a28935fa9616c3ca");
             }
         }
 

@@ -225,7 +225,7 @@ namespace App2
             //return new Task<UpdateDemographics>;
         }
 
-        private async void UpdateDemographics(ImageAnalyzer img)
+        private void UpdateDemographics(ImageAnalyzer img)
         {
             System.Diagnostics.Debug.WriteLine("enter update");
 
@@ -291,17 +291,24 @@ namespace App2
                             genderBasedAgeDistribution.Age50sAndOlder++;
                         }
                     }
-                    item.Anger = lastEmotionSample.First().Scores.Anger.ToString();
-                    item.Contempt = lastEmotionSample.First().Scores.Contempt.ToString();
-                    item.Disgust = lastEmotionSample.First().Scores.Disgust.ToString();
-                    item.Fear = lastEmotionSample.First().Scores.Fear.ToString();
-                    item.Happiness = lastEmotionSample.First().Scores.Happiness.ToString();
-                    item.Neutral = lastEmotionSample.First().Scores.Neutral.ToString();
-                    item.Sadness = lastEmotionSample.First().Scores.Sadness.ToString();
-                    item.Surprise = lastEmotionSample.First().Scores.Surprise.ToString();
+
+                    if (lastEmotionSample != null)
+                    {
+                        item.Anger = lastEmotionSample.First().Scores.Anger.ToString();
+                        item.Contempt = lastEmotionSample.First().Scores.Contempt.ToString();
+                        item.Disgust = lastEmotionSample.First().Scores.Disgust.ToString();
+                        item.Fear = lastEmotionSample.First().Scores.Fear.ToString();
+                        item.Happiness = lastEmotionSample.First().Scores.Happiness.ToString();
+                        item.Neutral = lastEmotionSample.First().Scores.Neutral.ToString();
+                        item.Sadness = lastEmotionSample.First().Scores.Sadness.ToString();
+                        item.Surprise = lastEmotionSample.First().Scores.Surprise.ToString();
 #pragma warning disable 4014
-                    await Task.WhenAll(IoTClient.Start(item));
+                        IoTClient.Start(item);
+                       // await Task.WhenAll(IoTClient.Start(item));
 #pragma warning restore 4014
+                        System.Diagnostics.Debug.WriteLine("here!!!!!!!!");
+                    }
+
                 }
 
                 if (demographicsChanged)
