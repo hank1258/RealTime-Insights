@@ -54,7 +54,7 @@ namespace App2.Controls
                // await SendEvent(deviceClient);
               //  await ReceiveCommands(serviceClient);
 
-                Debug.WriteLine("Exited!\n");
+                Debug.WriteLine(json);
             }
             catch (Exception ex)
             {

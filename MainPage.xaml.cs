@@ -192,13 +192,9 @@ namespace App2
                 this.lastSimilarPersistedFaceSample = e.SimilarFaceMatches;
             }
 
-            // var task=Task.Run(async () => await this.UpdateDemographics(e));
-            //  task.Start();
-            //  await Task.WhenAll(this.UpdateDemographics(e));
-            //  task.Start();
-            //  task.Wait();
-           this.UpdateDemographics(e);
-          //  await Task.Run(() => UpdateDemographics(e));
+            
+            this.UpdateDemographics(e);
+          
             this.debugText.Text = string.Format("Latency: {0}ms", (int)(DateTime.Now - start).TotalMilliseconds);
 
             this.isProcessingPhoto = false;
@@ -229,9 +225,7 @@ namespace App2
             //return new Task<UpdateDemographics>;
         }
 
-        private async 
-        void
-UpdateDemographics(ImageAnalyzer img)
+        private async void UpdateDemographics(ImageAnalyzer img)
         {
             System.Diagnostics.Debug.WriteLine("enter update");
 
