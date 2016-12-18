@@ -1,2 +1,5 @@
 ServiceHelp/bin/*
+ServiceHelpers/bin/*
 bin/*
+obj/
+packages/

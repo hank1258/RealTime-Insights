@@ -178,6 +178,25 @@ namespace IntelligentKioskSample
             return pix.DetachPixelData();
         }
 
+        internal static async Task<byte[]> GetPixelBytesFromSoftwareBitmapAsync(SoftwareBitmap softwareBitmap)
+        {
+            using (InMemoryRandomAccessStream stream = new InMemoryRandomAccessStream())
+            {
+                BitmapEncoder encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.JpegEncoderId, stream);
+                encoder.SetSoftwareBitmap(softwareBitmap);
+                await encoder.FlushAsync();
+
+                // Read the pixel bytes from the memory stream
+                using (var reader = new DataReader(stream.GetInputStreamAt(0)))
+                {
+                    var bytes = new byte[stream.Size];
+                    await reader.LoadAsync((uint)stream.Size);
+                    reader.ReadBytes(bytes);
+                    return bytes;
+                }
+            }
+        }
+
         public static void AddRange<T>(this IList<T> list, IEnumerable<T> items)
         {
             foreach (var item in items)
@@ -207,7 +226,7 @@ namespace IntelligentKioskSample
             using (var fileStream = System.IO.File.OpenRead(path))
             {
                 blockBlob.UploadFromStreamAsync(fileStream);
-                
+
             }
 
             Random rand = new Random();

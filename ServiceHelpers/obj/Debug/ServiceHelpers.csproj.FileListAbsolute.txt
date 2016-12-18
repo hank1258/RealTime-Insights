@@ -16,3 +16,17 @@ C:\Cognitive-Samples-IntelligentKiosk-master\Cognitive-Samples-IntelligentKiosk-
 C:\Cognitive-Samples-IntelligentKiosk-master\Cognitive-Samples-IntelligentKiosk-master\Kiosk\ServiceHelpers\obj\Debug\ServiceHelpers.pdb
 C:\Users\chuhuan\Project\microsoft\RealTime-Insights\ServiceHelpers\obj\Debug\ServiceHelpers.dll
 C:\Users\chuhuan\Project\microsoft\RealTime-Insights\ServiceHelpers\obj\Debug\ServiceHelpers.pdb
+C:\Users\chuhuan\Project\microsoft\RealTime-Insights\ServiceHelpers\bin\Debug\ServiceHelpers.dll.config
+C:\Users\chuhuan\Project\microsoft\RealTime-Insights\ServiceHelpers\bin\Debug\ServiceHelpers.dll
+C:\Users\chuhuan\Project\microsoft\RealTime-Insights\ServiceHelpers\bin\Debug\ServiceHelpers.pdb
+C:\Users\chuhuan\Project\microsoft\RealTime-Insights\ServiceHelpers\bin\Debug\Microsoft.ProjectOxford.Common.dll
+C:\Users\chuhuan\Project\microsoft\RealTime-Insights\ServiceHelpers\bin\Debug\Microsoft.ProjectOxford.Emotion.dll
+C:\Users\chuhuan\Project\microsoft\RealTime-Insights\ServiceHelpers\bin\Debug\Microsoft.ProjectOxford.Face.dll
+C:\Users\chuhuan\Project\microsoft\RealTime-Insights\ServiceHelpers\bin\Debug\Newtonsoft.Json.dll
+C:\Users\chuhuan\Project\microsoft\RealTime-Insights\ServiceHelpers\bin\Debug\System.Net.Http.Extensions.dll
+C:\Users\chuhuan\Project\microsoft\RealTime-Insights\ServiceHelpers\bin\Debug\System.Net.Http.Primitives.dll
+C:\Users\chuhuan\Project\microsoft\RealTime-Insights\ServiceHelpers\bin\Debug\Newtonsoft.Json.xml
+C:\Users\chuhuan\Project\microsoft\RealTime-Insights\ServiceHelpers\bin\Debug\System.Net.Http.Extensions.xml
+C:\Users\chuhuan\Project\microsoft\RealTime-Insights\ServiceHelpers\bin\Debug\System.Net.Http.Primitives.xml
+C:\Users\chuhuan\Project\microsoft\RealTime-Insights\ServiceHelpers\obj\Debug\ServiceHelpers.csproj.App.config
+C:\Users\chuhuan\Project\microsoft\RealTime-Insights\ServiceHelpers\obj\Debug\ServiceHelpers.csprojResolveAssemblyReference.cache

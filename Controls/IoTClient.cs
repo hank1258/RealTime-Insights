@@ -51,58 +51,11 @@ namespace App2.Controls
                 var message = new Microsoft.Azure.Devices.Message(System.Text.Encoding.ASCII.GetBytes(str));
                 string json = JsonConvert.SerializeObject(dict, Formatting.Indented);
                 await serviceClient.SendEventAsync(new Microsoft.Azure.Devices.Client.Message(Encoding.UTF8.GetBytes(json)));
-               // await SendEvent(deviceClient);
-              //  await ReceiveCommands(serviceClient);
-
               
             }
             catch (Exception ex)
             {
                 Debug.WriteLine("Error in sample: {0}", ex.Message);
-            }
-        }
-
-        static async Task SendEvent(DeviceClient deviceClient)
-        {
-            string dataBuffer;
-
-            Debug.WriteLine("Device sending {0} messages to IoTHub...\n", MESSAGE_COUNT);
-
-            for (int count = 0; count < MESSAGE_COUNT; count++)
-            {
-                dataBuffer = string.Format("Msg from UWP: {0}_{1}", count, Guid.NewGuid().ToString());
-                Message eventMessage = new Message(Encoding.UTF8.GetBytes(dataBuffer));
-                Debug.WriteLine("\t{0}> Sending message: {1}, Data: [{2}]", DateTime.Now.ToLocalTime(), count, dataBuffer);
-
-                await deviceClient.SendEventAsync(eventMessage);
-            }
-        }
-
-        static async Task ReceiveCommands(DeviceClient deviceClient)
-        {
-            Debug.WriteLine("\nDevice waiting for commands from IoTHub...\n");
-            Message receivedMessage;
-            string messageData;
-
-            while (true)
-            {
-                receivedMessage = await deviceClient.ReceiveAsync();
-
-                if (receivedMessage != null)
-                {
-                    messageData = Encoding.ASCII.GetString(receivedMessage.GetBytes());
-                    Debug.WriteLine("\t{0}> Received message: {1}", DateTime.Now.ToLocalTime(), messageData);
-
-                    await deviceClient.CompleteAsync(receivedMessage);
-                }
-
-                //  Note: In this sample, the polling interval is set to 
-                //  10 seconds to enable you to see messages as they are sent.
-                //  To enable an IoT solution to scale, you should extend this //  interval. For example, to scale to 1 million devices, set 
-                //  the polling interval to 25 minutes.
-                //  For further information, see
-                //  https://azure.microsoft.com/documentation/articles/iot-hub-devguide/#messaging
-                await Task.Delay(TimeSpan.FromSeconds(10));
             }
         }
     }

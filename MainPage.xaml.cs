@@ -22,6 +22,7 @@ using Microsoft.Azure.Devices;
 using Newtonsoft.Json;
 using System.Text;
 using Microsoft.Azure.Devices.Client;
+using System.Threading;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -96,6 +97,7 @@ namespace App2
                         }
                         else
                         {
+                            System.Diagnostics.Debug.WriteLine("Face Detected");
                             await this.ProcessCameraCapture(await this.cameraControl.TakeAutoCapturePhoto());
                         }
                     }
@@ -120,6 +122,7 @@ namespace App2
 
         private async Task ProcessCameraCapture(ImageAnalyzer e)
         {
+            System.Diagnostics.Debug.WriteLine("ProcessCameraCapture");
             if (e == null)
             {
                 this.lastDetectedFaceSample = null;
@@ -127,8 +130,8 @@ namespace App2
                 this.lastSimilarPersistedFaceSample = null;
                 this.lastEmotionSample = null;
                 this.debugText.Text = "";
-
                 this.isProcessingPhoto = false;
+                System.Diagnostics.Debug.WriteLine("No image");
                 return;
             }
 
@@ -157,8 +160,7 @@ namespace App2
                     Fear = e.DetectedEmotion.Average(em => em.Scores.Fear),
                     Surprise = e.DetectedEmotion.Average(em => em.Scores.Surprise)
                 };
-               
-
+            
                 this.emotionDataTimelineControl.DrawEmotionData(averageScores);
             }
 
@@ -171,18 +173,7 @@ namespace App2
                 this.lastDetectedFaceSample = e.DetectedFaces;
             }
 
-            // Compute Face Identification and Unique Face Ids
-            await Task.WhenAll(e.IdentifyFacesAsync(), e.FindSimilarPersistedFacesAsync());
-
-            if (!e.IdentifiedPersons.Any())
-            {
-                this.lastIdentifiedPersonSample = null;
-            }
-            else
-            {
-                this.lastIdentifiedPersonSample = e.DetectedFaces.Select(f => new Tuple<Face, IdentifiedPerson>(f, e.IdentifiedPersons.FirstOrDefault(p => p.FaceId == f.FaceId)));
-            }
-
+            await e.FindSimilarPersistedFacesAsync();
             if (!e.SimilarFaceMatches.Any())
             {
                 this.lastSimilarPersistedFaceSample = null;
@@ -192,7 +183,6 @@ namespace App2
                 this.lastSimilarPersistedFaceSample = e.SimilarFaceMatches;
             }
 
-            
             this.UpdateDemographics(e);
           
             this.debugText.Text = string.Format("Latency: {0}ms", (int)(DateTime.Now - start).TotalMilliseconds);
@@ -220,17 +210,13 @@ namespace App2
             base.OnNavigatedTo(e);
         }
 
-        private async Task UpdateDemographicsAsync(ImageAnalyzer im)
-        {
-            //return new Task<UpdateDemographics>;
-        }
-
-        private void UpdateDemographics(ImageAnalyzer img)
+        private async void UpdateDemographics(ImageAnalyzer img)
         {
             System.Diagnostics.Debug.WriteLine("enter update");
 
             if (this.lastSimilarPersistedFaceSample != null)
             {
+                System.Diagnostics.Debug.WriteLine("this.lastSimilarPersistedFaceSample != null", this.lastSimilarPersistedFaceSample.Count());
                 bool demographicsChanged = false;
                 // Update the Visitor collection (either add new entry or update existing)
                 foreach (var item in this.lastSimilarPersistedFaceSample)
@@ -238,6 +224,7 @@ namespace App2
                     Visitor visitor;
                     if (this.visitors.TryGetValue(item.SimilarPersistedFace.PersistedFaceId, out visitor))
                     {
+                        System.Diagnostics.Debug.WriteLine("update count");
                         visitor.Count++ ;
                         item.Unique = "0";
                      
@@ -303,8 +290,10 @@ namespace App2
                         item.Sadness = lastEmotionSample.First().Scores.Sadness.ToString();
                         item.Surprise = lastEmotionSample.First().Scores.Surprise.ToString();
 #pragma warning disable 4014
-                        IoTClient.Start(item);
-                       // await Task.WhenAll(IoTClient.Start(item));
+                        //IoTClient.Start(item);
+                        await Task.WhenAll(IoTClient.Start(item));
+                       // Task t1 = Task.Factory.StartNew(delegate { IoTClient.Start(item); });
+                       //  t1.Start();
 #pragma warning restore 4014
                         System.Diagnostics.Debug.WriteLine("here!!!!!!!!");
                     }

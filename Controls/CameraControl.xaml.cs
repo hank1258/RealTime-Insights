@@ -148,37 +148,29 @@ namespace App2.Controls
 
         public async Task StartStreamAsync(bool isForRealTimeProcessing = true)
         {
-
             try
             {
-
                 captureManager = new MediaCapture();
 
-                // For this scenario, we only need Video (not microphone) so specify this in the initializer.
-                // NOTE: the appxmanifest only declares "webcam" under capabilities and if this is changed to include
-                // microphone (default constructor) you must add "microphone" to the manifest or initialization will fail.
                 MediaCaptureInitializationSettings settings = new MediaCaptureInitializationSettings();
-
                 var allCameras = await DeviceInformation.FindAllAsync(DeviceClass.VideoCapture);
-                var selectedCamera = allCameras.FirstOrDefault(c => c.Name == "WebCam" || c.Name =="IntegratedCamera");
-
+                var selectedCamera = allCameras.FirstOrDefault(c => c.Name == "WebCam" || c.Name == "IntegratedCamera");
                 if (selectedCamera != null)
                 {
-                   // System.Diagnostics.Debug.WriteLine("meowmeow");
                     settings.VideoDeviceId = selectedCamera.Id;
                     System.Diagnostics.Debug.WriteLine("lplolaaaaaaaalollol");
                 }
-              
+
                 //settings.StreamingCaptureMode = StreamingCaptureMode.Video;
                 System.Diagnostics.Debug.WriteLine("zzzzzzzzlollol");
                 await captureManager.InitializeAsync(settings);
-               // await captureManager.InitializeAsync();
+                // await captureManager.InitializeAsync();
                 System.Diagnostics.Debug.WriteLine("lplolpppppppppppplollol");
                 await SetVideoEncodingToHighestResolution(isForRealTimeProcessing);
                 System.Diagnostics.Debug.WriteLine("lplololollol");
                 // Cache the media properties as we'll need them later.
-                    var deviceController = this.captureManager.VideoDeviceController;
-                    this.videoProperties = deviceController.GetMediaStreamProperties(MediaStreamType.VideoPreview) as VideoEncodingProperties;
+                var deviceController = this.captureManager.VideoDeviceController;
+                this.videoProperties = deviceController.GetMediaStreamProperties(MediaStreamType.VideoPreview) as VideoEncodingProperties;
 
 
                 // Immediately start streaming to our CaptureElement UI.
@@ -206,7 +198,7 @@ namespace App2.Controls
 
                 this.cameraControlSymbol.Symbol = Symbol.Camera;
                 this.webCamCaptureElement.Visibility = Visibility.Visible;
-                
+
 
             }
             catch (Exception ex)
@@ -316,7 +308,7 @@ namespace App2.Controls
                     RealTimeFaceIdentificationBorder faceBorder = new RealTimeFaceIdentificationBorder();
                     this.FaceTrackingVisualizationCanvas.Children.Add(faceBorder);
 
-                     faceBorder.ShowFaceRectangle((uint)(face.FaceBox.X / widthScale), (uint)(face.FaceBox.Y / heightScale), (uint)(face.FaceBox.Width / widthScale), (uint)(face.FaceBox.Height / heightScale));
+                    faceBorder.ShowFaceRectangle((uint)(face.FaceBox.X / widthScale), (uint)(face.FaceBox.Y / heightScale), (uint)(face.FaceBox.Width / widthScale), (uint)(face.FaceBox.Height / heightScale));
 
                     if (this.realTimeDataProvider != null)
                     {
@@ -324,7 +316,7 @@ namespace App2.Controls
                         if (lastEmotion != null)
                         {
                             faceBorder.ShowRealTimeEmotionData(lastEmotion);
-                            
+
                         }
 
                         Face detectedFace = this.realTimeDataProvider.GetLastFaceAttributesForFace(face.FaceBox);
@@ -520,16 +512,26 @@ namespace App2.Controls
         {
             try
             {
-                var stream = new MemoryStream();
-                await captureManager.CapturePhotoToStreamAsync(ImageEncodingProperties.CreateJpeg(), stream.AsRandomAccessStream());
-                stream.Position = 0;
+                if (!(await this.frameProcessingSemaphore.WaitAsync(250)))
+                {
+                    return null;
+                }
 
-                ImageAnalyzer imageWithFace = new ImageAnalyzer(stream.ToArray());
-                imageWithFace.ShowDialogOnFaceApiErrors = this.ShowDialogOnApiErrors;
-                imageWithFace.FilterOutSmallFaces = this.FilterOutSmallFaces;
-                imageWithFace.UpdateDecodedImageSize(this.CameraResolutionHeight, this.CameraResolutionWidth);
+                // Capture a frame from the preview stream
+                var videoFrame = new VideoFrame(BitmapPixelFormat.Bgra8, CameraResolutionWidth, CameraResolutionHeight);
+                using (var currentFrame = await captureManager.GetPreviewFrameAsync(videoFrame))
+                {
+                    using (SoftwareBitmap previewFrame = currentFrame.SoftwareBitmap)
+                    {
+                        ImageAnalyzer imageWithFace = new ImageAnalyzer(await Util.GetPixelBytesFromSoftwareBitmapAsync(previewFrame));
 
-                return imageWithFace;
+                        imageWithFace.ShowDialogOnFaceApiErrors = this.ShowDialogOnApiErrors;
+                        imageWithFace.FilterOutSmallFaces = this.FilterOutSmallFaces;
+                        imageWithFace.UpdateDecodedImageSize(this.CameraResolutionHeight, this.CameraResolutionWidth);
+
+                        return imageWithFace;
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -538,10 +540,14 @@ namespace App2.Controls
                     await Util.GenericApiCallExceptionHandler(ex, "Error capturing photo.");
                 }
             }
+            finally
+            {
+                this.frameProcessingSemaphore.Release();
+            }
 
             return null;
         }
-
+        
         private void OnImageCaptured(ImageAnalyzer imageWithFace)
         {
             if (this.ImageCaptured != null)
